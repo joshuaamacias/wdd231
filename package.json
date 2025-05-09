@@ -1,9 +1,8 @@
 {
   "name": "nps",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "vite",
     "build": "vite build --emptyOutDir",
@@ -13,6 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vite": "^6.2.3"
+    "vite": "^5.3.2"
   }
 }
