@@ -1,0 +1,50 @@
+/* pride.css */
+body {
+  background: #fff;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #eaf6ff;       /* pale blue */
+  border: 10px solid #ffe8c4; /* light peach */
+  border-radius: 8px;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+ul {
+  list-style: disc inside;
+  text-align: left;
+  margin: 0 auto 1.5rem;
+  padding: 0;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border: none;
+  border-radius: 4px;
+  background: #6b5b95;  /* purple */
+  color: white;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1) }
+  50%     { transform: scale(1.1) }
+}
