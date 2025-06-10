@@ -1,50 +1,45 @@
-/* pride.css */
 body {
-  background: #fff;
-  margin: 0;
+  background-color: #fef4e8;
   font-family: Arial, sans-serif;
-}
-
-.container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #eaf6ff;       /* pale blue */
-  border: 10px solid #ffe8c4; /* light peach */
-  border-radius: 8px;
+  font-size: 18px;
   text-align: center;
-}
-
-h1 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-}
-
-ul {
-  list-style: disc inside;
-  text-align: left;
-  margin: 0 auto 1.5rem;
+  margin: 0;
   padding: 0;
 }
 
-li {
-  margin: 0.5rem 0;
+.container {
+  background-color: #eef7ff;
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: disc;
+  text-align: left;
+  margin: 1rem auto;
+  padding-left: 2rem;
+  max-width: 500px;
 }
 
 button {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  margin: 0.25rem;
-  border: none;
-  border-radius: 4px;
-  background: #6b5b95;  /* purple */
+  background-color: blue;
   color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  animation: pulse 2s infinite;
+  animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-  0%,100% { transform: scale(1) }
-  50%     { transform: scale(1.1) }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }

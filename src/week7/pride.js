@@ -1,60 +1,36 @@
-// pride.js
+const button = document.getElementById("load-btn");
+const ul     = document.getElementById("quote-list");
+const KEY    = "pride-prejudice";
 
-function populateList(quotes) {
-  const ul = document.getElementById('quote-list');
-  ul.style.display = '';
-  ul.innerHTML = '';
+button.addEventListener("click", async () => {
+  let quotes;
+
+  // 1️⃣ If we already have them in localStorage, use those…
+  const stored = localStorage.getItem(KEY);
+  if (stored) {
+    quotes = JSON.parse(stored);
+  } 
+  // 2️⃣ Otherwise fetch & cache them…
+  else {
+    try {
+      const res  = await fetch("quotes.json");
+      const data = await res.json();
+      quotes    = data["Pride and Prejudice"];
+      if (!quotes) throw new Error("No Pride and Prejudice quotes found");
+      localStorage.setItem(KEY, JSON.stringify(quotes));
+    } catch (err) {
+      console.error(err);
+      alert("Couldn’t load quotes. Try again later.");
+      return;
+    }
+  }
+
+  // 3️⃣ Render & hide the button
+  ul.innerHTML = "";                    
   quotes.forEach(q => {
-    const li = document.createElement('li');
+    const li = document.createElement("li");
     li.textContent = q;
     ul.appendChild(li);
   });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const loadBtn = document.getElementById('load-btn');
-  const hideBtn = document.getElementById('hide-btn');
-  const stored = localStorage.getItem('pride-prejudice');
-
-  if (stored) {
-    // Show stored quotes and hide the load button
-    populateList(JSON.parse(stored));
-    loadBtn.style.display = 'none';
-    hideBtn.style.display = 'inline-block';
-  } else {
-    // No stored quotes yet: hide the hide button
-    hideBtn.style.display = 'none';
-  }
-
-  // Load quotes from JSON on click
-  loadBtn.addEventListener('click', () => {
-    fetch('./quotes.json')
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        const books = Array.isArray(data.books) ? data.books : [];
-        const pp = books.find(b => b.title === 'Pride and Prejudice');
-        const quotes = (pp && Array.isArray(pp.quotes)) ? pp.quotes : [];
-        if (!quotes.length) throw new Error('No P&P quotes found');
-
-        localStorage.setItem('pride-prejudice', JSON.stringify(quotes));
-        populateList(quotes);
-
-        loadBtn.style.display = 'none';
-        hideBtn.style.display = 'inline-block';
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById('quote-list').innerHTML = '<li>Sorry, could not load quotes.</li>';
-      });
-  });
-
-  // Hide the list and toggle buttons
-  hideBtn.addEventListener('click', () => {
-    document.getElementById('quote-list').style.display = 'none';
-    hideBtn.style.display = 'none';
-    loadBtn.style.display = 'inline-block';
-  });
+  button.style.display = "none";
 });
