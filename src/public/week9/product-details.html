@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details</title>
+  <style>
+    /* full-screen teal background + center card */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #4f7d8a;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* white card container */
+    .card {
+      background: #fff;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    /* main title + underline */
+    h1 {
+      color: #3a2663;
+      margin: 0;
+      font-size: 2rem;
+    }
+    .underline {
+      width: 4rem;
+      height: 4px;
+      background: #d0c144;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    /* product details */
+    .details h2 {
+      color: #a72f25;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .details img {
+      display: block;
+      width: 100%;
+      border-radius: 6px;
+      margin: 1rem 0;
+    }
+    .details p {
+      line-height: 1.5;
+      color: #333;
+      margin: 0.75rem 0;
+    }
+    .details p.price {
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    /* overlay backdrop */
+    #overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #overlay[aria-hidden="false"] {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      padding: 2rem;
+      border-radius: 6px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: #3a2663;
+    }
+    .modal input {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal button {
+      background: #a72f25;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .modal button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .error {
+      color: #a72f25;
+      font-size: 0.9rem;
+      height: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Product Details</h1>
+    <div class="underline"></div>
+
+    <div class="details" id="details">
+      <!-- JS will inject the selected product here -->
+    </div>
+  </div>
+
+  <!-- overlay -->
+  <div id="overlay" aria-hidden="true">
+    <div class="modal">
+      <h2>Important message</h2>
+      <p>Sign up today for dental deals through our e-mail list!</p>
+      <input type="email" id="email" placeholder="Enter your email…">
+      <div class="error" id="error"></div>
+      <button id="signUp">Sign Up Now!</button>
+    </div>
+  </div>
+
+  <script>
+    // 1. Fetch & render product
+    async function showProduct() {
+      const params = new URLSearchParams(location.search);
+      const id = Number(params.get('id'));
+      const res = await fetch('./dental.json');
+      const products = await res.json();
+      const prod = products.find(p => p.id === id);
+      const container = document.getElementById('details');
+
+      if (!prod) {
+        container.textContent = 'Sorry, product not found.';
+        return;
+      }
+
+      container.innerHTML = `
+        <h2>${prod.name}</h2>
+        <img src="${prod.imageUrl}" alt="${prod.name}">
+        <p>${prod.description}</p>
+        <p class="price">$${prod.price.toFixed(2)}</p>
+      `;
+    }
+
+    // 2. Overlay logic
+    function setupOverlay() {
+      const overlay = document.getElementById('overlay');
+      const emailInput = document.getElementById('email');
+      const error = document.getElementById('error');
+      const btn = document.getElementById('signUp');
+
+      // show on load
+      overlay.setAttribute('aria-hidden', 'false');
+
+      // hide helper
+      function hide() {
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      // click outside
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) hide();
+      });
+
+      // esc key
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') hide();
+      });
+
+      // sign up click
+      btn.addEventListener('click', () => {
+        if (!emailInput.value.trim()) {
+          error.textContent = 'Please enter your email.';
+        } else {
+          hide();
+          alert('Thanks for signing up!');
+        }
+      });
+    }
+
+    // run both
+    showProduct().then(setupOverlay);
+  </script>
+</body>
+</html>

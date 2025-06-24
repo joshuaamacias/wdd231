@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Dental Care Store</title>
+  <style>
+    /* full-screen blue-teal background, center the card */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #4f7d8a;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* the white card container */
+    .card {
+      background: #fff;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* main title and colored underline */
+    h1 {
+      color: #3a2663;
+      margin: 0 0 0.25rem;
+      font-size: 2rem;
+    }
+    .underline {
+      width: 4rem;
+      height: 4px;
+      background: #d0c144;
+      margin-bottom: 1.5rem;
+    }
+
+    /* sub-heading and instructions */
+    h2 {
+      color: #a72f25;
+      margin: 0 0 0.5rem;
+      font-size: 1.25rem;
+    }
+    .instructions {
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 1.5rem;
+    }
+
+    /* list styling */
+    #product-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #product-list li {
+      background: #f0f2f5;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      transition: background 0.2s ease;
+    }
+    #product-list li a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: #3a2663;
+      text-decoration: none;
+    }
+    #product-list li:hover {
+      background: #e2e4e8;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>The Dental Care Store</h1>
+    <div class="underline"></div>
+
+    <h2>Product Listings</h2>
+    <p class="instructions">Click any item to see the details!</p>
+
+    <ul id="product-list"></ul>
+  </div>
+
+  <script>
+    async function loadProducts() {
+      const res = await fetch('./dental.json');
+      const products = await res.json();
+      const list = document.getElementById('product-list');
+
+      products.forEach(p => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `./product-details.html?id=${p.id}`;
+        link.textContent = p.name;
+        li.appendChild(link);
+        list.appendChild(li);
+      });
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
