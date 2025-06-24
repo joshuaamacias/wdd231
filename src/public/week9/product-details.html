@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Product Details</title>
   <style>
-    /* full-screen teal background + center card */
     body {
       margin: 0;
       padding: 0;
@@ -16,53 +15,65 @@
       min-height: 100vh;
     }
 
-    /* white card container */
     .card {
+      position: relative;
       background: #fff;
       width: 90%;
       max-width: 600px;
       border-radius: 8px;
       padding: 2rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      position: relative;
+      text-align: center;
     }
 
-    /* main title + underline */
+    /* subtle back link */
+    .back-link {
+      display: block;
+      text-align: left;            /* left-align inside the card */
+      font-size: 0.9rem;
+      color: #666;
+      text-decoration: none;
+      margin-bottom: 1rem;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* header underline */
     h1 {
-      color: #1c1035;
-      margin: 0;
+      display: inline-block;
       font-size: 2rem;
-    }
-    .underline {
-      width: 4rem;
-      height: 4px;
-      background: #d0c144;
-      margin: 0.5rem 0 1.5rem;
+      color: #3a2663;
+      margin: 0;
+      padding-bottom: 0.25rem;
+      border-bottom: 4px solid #d0c144;
     }
 
-    /* product details */
+    .details {
+      text-align: left;            /* left-align product info */
+      margin-top: 1.5rem;
+    }
     .details h2 {
       color: #a72f25;
-      margin: 0;
+      margin: 0 0 1rem;
       font-size: 1.5rem;
     }
     .details img {
-      display: block;
       width: 100%;
       border-radius: 6px;
-      margin: 1rem 0;
+      margin-bottom: 1rem;
     }
     .details p {
       line-height: 1.5;
       color: #333;
-      margin: 0.75rem 0;
+      margin: 0.5rem 0;
     }
     .details p.price {
       font-weight: bold;
       margin-top: 1rem;
     }
 
-    /* overlay backdrop */
+    /* keep your overlay intact */
     #overlay {
       position: fixed;
       top: 0; left: 0;
@@ -84,47 +95,35 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       text-align: center;
     }
-    .modal h2 {
-      margin-top: 0;
-      color: #3a2663;
-    }
+    .modal h2 { margin-top: 0; color: #3a2663; }
     .modal input {
-      width: 100%;
-      padding: 0.5rem;
-      margin: 1rem 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      width: 100%; padding: 0.5rem; margin: 1rem 0;
+      border: 1px solid #ccc; border-radius: 4px;
     }
     .modal button {
-      background: #a72f25;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
+      background: #a72f25; color: white;
+      padding: 0.5rem 1rem; border: none; border-radius: 4px;
       cursor: pointer;
     }
-    .modal button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
     .error {
-      color: #a72f25;
-      font-size: 0.9rem;
-      height: 1.2rem;
+      color: #a72f25; font-size: 0.9rem; height: 1.2rem;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Product Details</h1>
-    <div class="underline"></div>
+    <!-- Subtle back link -->
+    <a href="./product-list.html" class="back-link">← Back to Listings</a>
 
+    <!-- Title with centered underline -->
+    <h1>Product Details</h1>
+
+    <!-- Product info -->
     <div class="details" id="details">
-      <!-- JS will inject the selected product here -->
+      <!-- filled in by JS -->
     </div>
   </div>
 
-  <!-- overlay -->
   <div id="overlay" aria-hidden="true">
     <div class="modal">
       <h2>Important message</h2>
@@ -136,7 +135,6 @@
   </div>
 
   <script>
-    // 1. Fetch & render product
     async function showProduct() {
       const params = new URLSearchParams(location.search);
       const id = Number(params.get('id'));
@@ -158,32 +156,24 @@
       `;
     }
 
-    // 2. Overlay logic
     function setupOverlay() {
       const overlay = document.getElementById('overlay');
       const emailInput = document.getElementById('email');
       const error = document.getElementById('error');
       const btn = document.getElementById('signUp');
 
-      // show on load
       overlay.setAttribute('aria-hidden', 'false');
 
-      // hide helper
       function hide() {
         overlay.setAttribute('aria-hidden', 'true');
       }
 
-      // click outside
       overlay.addEventListener('click', e => {
         if (e.target === overlay) hide();
       });
-
-      // esc key
       document.addEventListener('keydown', e => {
         if (e.key === 'Escape') hide();
       });
-
-      // sign up click
       btn.addEventListener('click', () => {
         if (!emailInput.value.trim()) {
           error.textContent = 'Please enter your email.';
@@ -194,7 +184,6 @@
       });
     }
 
-    // run both
     showProduct().then(setupOverlay);
   </script>
 </body>

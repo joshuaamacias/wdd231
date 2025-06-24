@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>The Dental Care Store</title>
   <style>
-    /* full-screen blue-teal background, center the card */
+    /* full-screen teal background + center card */
     body {
       margin: 0;
       padding: 0;
@@ -16,7 +16,7 @@
       min-height: 100vh;
     }
 
-    /* the white card container */
+    /* the white card container, center title but left-align the rest */
     .card {
       background: #fff;
       width: 90%;
@@ -24,19 +24,22 @@
       border-radius: 8px;
       padding: 2rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;          /* center the <h1> */
+    }
+    .card h2,
+    .card .instructions,
+    .card #product-list {
+      text-align: left;            /* override to left-align below the title */
     }
 
-    /* main title and colored underline */
+    /* main title with exactly-sized yellow underline */
     h1 {
-      color: #3a2663;
-      margin: 0 0 0.25rem;
+      display: inline-block;       /* shrink to text width */
       font-size: 2rem;
-    }
-    .underline {
-      width: 4rem;
-      height: 4px;
-      background: #d0c144;
-      margin-bottom: 1.5rem;
+      color: #3a2663;
+      margin: 0 0 1.5rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 4px solid #d0c144;
     }
 
     /* sub-heading and instructions */
@@ -51,7 +54,7 @@
       margin: 0 0 1.5rem;
     }
 
-    /* list styling */
+    /* list styling with grow animation */
     #product-list {
       list-style: none;
       padding: 0;
@@ -61,7 +64,8 @@
       background: #f0f2f5;
       border-radius: 6px;
       margin-bottom: 0.75rem;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
+      transform-origin: center;    /* grow from center */
     }
     #product-list li a {
       display: block;
@@ -69,15 +73,17 @@
       color: #3a2663;
       text-decoration: none;
     }
+
+    /* on hover, grow slightly */
     #product-list li:hover {
       background: #e2e4e8;
+      transform: scale(1.03);
     }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>The Dental Care Store</h1>
-    <div class="underline"></div>
 
     <h2>Product Listings</h2>
     <p class="instructions">Click any item to see the details!</p>
