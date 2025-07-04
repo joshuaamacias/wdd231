@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quinn's Rock Shop Checkout</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="checkout.css">
+    <script src="checkout.js" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Quinn's Rock Shop Checkout</h1>
+
+        <!-- Product Display Section -->
+        <div class="product-display">
+            <img
+                class="product-image"
+                src="mysterious-crystal.jpg"
+                alt="Mysterious Crystal"
+            >
+            <div class="product-info">
+                <p><strong>Mysterious Crystal</strong></p>
+                <p>Price: $250.00</p>
+                <p>Quantity: 1</p>
+                <p><strong>Total: $250.00</strong></p>
+            </div>
+        </div>
+
+        <form
+            id="checkoutForm"
+            action="order-confirmation.html"
+            method="GET"
+        >
+            <fieldset>
+                <legend>Customer Information</legend>
+
+                <label for="firstName">First Name:</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    required
+                    pattern="[A-Z][a-z]+"
+                    title="Must start with a capital letter, letters only"
+                >
+
+                <label for="lastName">Last Name:</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    required
+                    pattern="[A-Z][a-z]+"
+                    title="Must start with a capital letter, letters only"
+                >
+
+                <label for="streetAddress">Street Address:</label>
+                <input
+                    type="text"
+                    id="streetAddress"
+                    name="streetAddress"
+                    required
+                    maxlength="30"
+                    title="No more than 30 characters"
+                >
+
+                <label for="city">City:</label>
+                <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    required
+                    maxlength="20"
+                    pattern=".*[aeiouAEIOU].*"
+                    title="Must contain at least one vowel (a, e, i, o, u)"
+                >
+
+                <label for="state">State:</label>
+                <input
+                    type="text"
+                    id="state"
+                    name="state"
+                    required
+                    pattern="[A-Z]{2}"
+                    title="Two capital letters, e.g. NY"
+                    placeholder="e.g., NY"
+                >
+
+                <label for="zipCode">Zip Code:</label>
+                <input
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    required
+                    pattern="\d{5}"
+                    title="Exactly five digits"
+                    placeholder="e.g., 12345"
+                >
+            </fieldset>
+
+            <fieldset>
+                <legend>Payment</legend>
+
+                <label for="cardNumber">Credit Card Number (if testing, use 4111 1111 1111 1111):</label>
+                <input type="text" id="cardNumber" name="cardNumber" required>
+
+                <label for="expMonth">Expiration Month:</label>
+                <input type="number" id="expMonth" name="expMonth" placeholder="MM" required>
+
+                <label for="expYear">Expiration Year:</label>
+                <input type="number" id="expYear" name="expYear" placeholder="YYYY" required>
+            </fieldset>
+
+            <!-- Error messages -->
+            <div id="errorMessages" class="hidden">
+                <ul></ul>
+            </div>
+
+            <!-- Place Order Button -->
+            <div class="button-container">
+                <button type="submit" class="place-order-button">
+                    Place Order
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
